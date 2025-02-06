@@ -1,0 +1,158 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: monospace, Arial, sans-serif;
+    text-align: center;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    color: #333333;
+    padding: 20px;
+}
+
+
+/* Animations */
+@keyframes colorChange {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  
+  @keyframes success {
+    0% { transform: scale(1); opacity: 0; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
+  }
+
+  @keyframes scoreUpdate {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes bounce {
+    0% { transform: translateY(0); }
+    30% { transform: translateY(-10px); }
+    50% { transform: translateY(5px); }
+    70% { transform: translateY(0); }
+    100% { transform: translateY(0); }
+  }
+
+.container {
+    background-color: #F4E1D2;
+    border-radius: 15px;
+    border: 1px solid #F4E1D2;
+    margin: auto;
+    width: 80%;
+    max-width: 800px;
+    height: auto;
+    padding: 20px 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin:10px 0;
+}
+
+.gameInstruction {
+    margin: 20px 0;
+
+}
+
+#colorBox {
+    width: 150px;
+    height: 150px;
+    margin: 30px auto;
+    border: 2px solid black;
+    border-radius: 8px;
+    animation: colorChange 0.5s ease-out, success 0.5s ease-out;
+}
+
+.color-button {
+    width: 100px;
+    height: 50px;
+    margin: 10px;
+    border: 1px solid gray;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.color-button:active {
+    animation: pop 0.2s ease-in-out;
+  }
+
+#gameStatus {
+    margin: 10px 0;
+}
+
+#gameStatus.shake {
+    animation: shake 0.5s ease;
+}
+
+#score {
+    animation: scoreUpdate 0.3s ease 0.2s;
+  }
+
+#newGameButton {
+    margin-top: 30px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid grey;
+    background-color: rgb(43, 37, 37);
+    color:white;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+#newGameButton:hover {
+    border: 2px solid rgb(43, 37, 37); /* or another highlight color */
+    background-color: white;
+    color: rgb(43, 37, 37);
+    animation: transition ease;
+  }
+
+
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    .container {
+        width:100%;
+        padding:15px;
+    }
+    .color-button {
+      width: 80px;
+      height: 80px;
+    }
+    #colorBox {
+        width: 120px;
+        height: 120px;
+    }
+    h1, .gameInstruction {
+        font-size: 18px; 
+    }
+
+    #newGameButton {
+        width: 100%;
+        font-size: 18px; 
+        padding: 15px; 
+    }
+  }
+  
