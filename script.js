@@ -24,50 +24,78 @@ function getRandomColor() {
   return predefinedColors[Math.floor(Math.random() * predefinedColors.length)];
 }
 
-// start game
-function startGame() {
-  // Generate a target color
+// Hide the color after a second so the user can guess
+function hideColorBox() {
+  colorBox.style.backgroundColor = "#F4E1D2";
+  colorBox.style.border = "2px dashed #ccc";
+}
+
+// Generate a target color from the array
+function generateColors() {
+  let colors = [targetColor];
+  while (colors.length < 6) {
+      let newColor = getRandomColor();
+      if (!colors.includes(newColor)) colors.push(newColor);
+  }
+  return colors;
+}
+
+// shuffle the colors 
+function shuffleArray(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+// Start a new game round
+function startNewRound() {
   targetColor = getRandomColor();
   colorBox.style.backgroundColor = targetColor;
 
-  // Generate 6 random colors (one must be the target)
-  let colors = [targetColor];
-  while (colors.length < 6) {
-    let newColor = getRandomColor();
-    if (!colors.includes(newColor)) colors.push(newColor);
-  }
+  let colors = generateColors();
+  colors = shuffleArray(colors);
 
-  // Shuffle colors
-  colors.sort(() => Math.random() - 0.5);
-
-  // Assign colors to buttons
   colorButtons.forEach((button, index) => {
-    button.style.backgroundColor = colors[index];
-    button.onclick = () => checkGuess(colors[index]);
+      button.style.backgroundColor = colors[index];
+      button.onclick = () => checkGuess(colors[index]);
   });
 
-  gameStatus.textContent = "Make a guess!";
+  gameStatus.textContent = "Remember this color!";
+  
+  setTimeout(() => {
+      hideColorBox();
+      gameStatus.textContent = "Make a guess!";
+  }, 1000);
 }
 
+// check guess
 function checkGuess(selectedColor) {
   if (selectedColor === targetColor) {
-    gameStatus.textContent = "Correct! 🎉";
-    gameStatus.classList.remove("shake");
-    score++;
-    scoreDisplay.textContent = score;
+      gameStatus.textContent = "Correct! 🎉";
+      gameStatus.classList.remove("shake");
+      score++;
+      scoreDisplay.textContent = score;
+      
+      setTimeout(() => {
+          startNewRound();
+      }, 1500);
   } else {
-    gameStatus.textContent = "Wrong! Try again. ❌";
-    gameStatus.classList.add("shake");
+      gameStatus.textContent = "Wrong! Try again. ❌";
+      gameStatus.classList.add("shake");
+      
+      // Start a new round with a new target color
+      setTimeout(() => {
+        startNewRound();
+    }, 1500);
   }
 }
 
+// REset the game
 newGameButton.addEventListener("click", () => {
   score = 0;
   scoreDisplay.textContent = score;
-  startGame();
+  startNewRound();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
   // Start the game on page load
-  startGame();
+  startNewRound();
 });
